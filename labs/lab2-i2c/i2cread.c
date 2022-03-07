@@ -39,6 +39,24 @@ int i2c_read(unsigned char reg)
 	return res;
 }
 
+void i2c_write(unsigned char reg, unsigned char value)
+{
+	if (ioctl(i2c_file, I2C_SLAVE, SI5351_ADDR) < 0) 
+    {
+        perror(I2C_FNAME);
+		exit(1);
+    }
+
+	int res;
+
+	/* Using SMBus commands */
+	res = i2c_smbus_write_byte_data(i2c_file, reg, value);
+	if (res < 0) 
+		perror(reg)
+    exit(1);
+	return;
+}
+
 int
 main()
 {
